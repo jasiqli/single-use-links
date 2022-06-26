@@ -1,0 +1,13 @@
+name = "single-use-link"
+main = "index.js"
+compatibility_date = "2022-06-26"
+account_id = ""
+workers_dev = true
+kv_namespaces = [
+  { binding = "REDIRECT_STORE", id = "", preview_id = "" }
+]
+[vars]
+  # Longer length, less change
+  CODE_LENGTH = 21
+  CODE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._+="
+  LINK_DOMAIN = "https://your.site"

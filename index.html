@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="robots" content="noindex, nofollow, notranslate, nosnippet">
+    <meta name="referrer" content="no-referrer">
+  </head>
+  <body>
+
+    <main>
+      <header><h1>Single-use/Expiring Links</h1></header>
+      <section>
+        <form name="url_gen">
+          <p>
+            <label>
+              <span>URL:</span>
+              <input name="to_url" type="url"/>
+            </label>
+          </p>
+          <p>
+            <label>
+              <span><strong>Single use/Expiring</strong></span>
+              Single: <input type="radio" name="singlexpire" value="single" checked>
+              Expire: <input type="radio" name="singlexpire" value="expire">
+            </label>
+          </p>
+          <button>Submit</button>
+        </form>
+      </section>
+      <section id="result"></section>
+    </main>
+
+    <script>
+      document.forms.url_gen.addEventListener('submit', async(e) => {
+        e.preventDefault();
+        const result = document.getElementById('result')
+        try {
+          const url = e.target.elements.to_url
+          const response = await fetch('/', {
+            method: "POST",
+            body: new FormData(e.target)
+          })
+          console.log(response)
+          if (response.status === 201) {
+            const code = await response.text();
+            result.innerHTML = `<a href="${code}">${code}</a>`
+          } else {
+            throw new Error("Error generating single-use code")
+          }
+        } catch(e){
+          result.innerHTML = e;
+        }
+      })
+    </script>
+
+  </body>
+</html>
